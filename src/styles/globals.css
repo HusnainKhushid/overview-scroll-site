@@ -1,0 +1,168 @@
+/* ------------------------------------------------------------------
+   Overview — tokens sampled from the reference frame
+   ------------------------------------------------------------------ */
+:root {
+  /* space ground: near-black navy at the frame edges, a faint lift up top */
+  --space-void: #01030a;
+  --space-deep: #050a18;
+  --space-lift: rgba(28, 62, 118, 0.32);
+
+  --ink: #ffffff;
+  --ink-soft: rgba(255, 255, 255, 0.84);
+  --ink-muted: rgba(255, 255, 255, 0.62);
+  --rule: rgba(255, 255, 255, 0.13);
+
+  /* the one accent in the whole design: the cyan under-rule + divider */
+  --cyan: #3fd8ef;
+  --cyan-pale: #8fecfa;
+
+  --btn-face: #eef4ff;
+  --btn-ink: #071224;
+  --btn-glow: rgba(168, 208, 255, 0.55);
+
+  --gutter: clamp(20px, 2.8vw, 42px);
+  --nav-h: clamp(62px, 6.6vw, 80px);
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* hero -> section two -> section three, written by the scroll listener */
+  --sp: 0;
+  --sp2: 0;
+  --sp3: 0;
+  --sp4: 0;
+
+  /* size knobs. Declared here as well as on .hero so components outside it
+     (the section-three CTA, for one) can still resolve the calc(). */
+  --scale: 1;
+  --ui-scale: 1;
+
+  --font-display: 'Playfair Display', 'Times New Roman', serif;
+  --font-ui: 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-ui);
+  color: var(--ink);
+  background-color: var(--space-void);
+  /* painted behind the canvas so there is never a white frame while the
+     15 MB globe streams in */
+  background-image:
+    radial-gradient(120% 78% at 50% -6%, var(--space-lift) 0%, transparent 62%),
+    linear-gradient(180deg, var(--space-deep) 0%, var(--space-void) 68%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+.page {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+.page a,
+.page button {
+  pointer-events: auto;
+}
+
+h1,
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+/* the single button system this design uses: a glowing white pill.
+   Two sizes — nav (compact) and hero (large). */
+.pill {
+  --pill-h: 30px;
+  --pill-px: 20px;
+  --pill-fs: 13px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: var(--pill-h);
+  padding: 0 var(--pill-px);
+  border-radius: 999px;
+  background: var(--btn-face);
+  color: var(--btn-ink);
+  font-size: var(--pill-fs);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.7),
+    0 0 26px var(--btn-glow);
+  transition:
+    transform 0.4s var(--ease-out),
+    box-shadow 0.4s var(--ease-out);
+}
+.pill:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.9),
+    0 0 40px rgba(178, 216, 255, 0.8);
+}
+.pill:active {
+  transform: translateY(0);
+}
+
+/* outline variant — used once the globe is behind the copy and a solid white
+   slab would punch a hole in it */
+.pill--ghost {
+  --pill-h: calc(52px * var(--ui-scale, 1));
+  --pill-px: calc(34px * var(--ui-scale, 1));
+  --pill-fs: calc(12.5px * var(--ui-scale, 1));
+  background: rgba(255, 255, 255, 0.03);
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  backdrop-filter: blur(6px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.36);
+}
+.pill--ghost:hover {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.7),
+    0 0 34px rgba(120, 190, 255, 0.28);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

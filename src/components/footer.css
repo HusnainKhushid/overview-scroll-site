@@ -1,0 +1,158 @@
+.footer {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: 1fr auto auto auto;
+  padding: 0 var(--gutter);
+  overflow: hidden; /* the wordmark is clipped by the bottom edge */
+}
+
+/* the band the limb crosses: kept empty, and given a floor of shade so the
+   columns underneath never fight the crescent for contrast */
+.footer__sky {
+  grid-row: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(1, 4, 12, 0) 52%, rgba(1, 4, 12, 0.72) 100%);
+  margin: 0 calc(var(--gutter) * -1);
+}
+
+/* --- link columns --- */
+.footer__cols {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: clamp(24px, 5vw, 90px);
+  padding-top: clamp(20px, 4vh, 40px);
+}
+
+.fcol__title {
+  margin: 0 0 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  font-family: var(--font-ui);
+  font-size: clamp(11px, 1.05vw, 13px);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.fcol__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.fcol__list li + li {
+  margin-top: 7px;
+}
+.fcol__list a {
+  display: inline-block;
+  font-size: clamp(12.5px, 1.1vw, 14px);
+  font-weight: 400;
+  color: var(--ink-muted);
+  transition:
+    color 0.35s var(--ease-out),
+    transform 0.35s var(--ease-out);
+}
+.fcol__list a:hover {
+  color: #fff;
+  transform: translateX(3px);
+}
+
+.fcol__cta {
+  --pill-h: 40px;
+  --pill-px: 22px;
+  --pill-fs: 11.5px;
+  margin-top: 20px;
+  letter-spacing: 0.06em;
+  text-transform: none;
+}
+
+/* --- legal line --- */
+.footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  margin: clamp(26px, 5vh, 54px) 0 0;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.34);
+}
+
+/* --- the wordmark --- */
+.footer__wordmark {
+  margin: clamp(6px, 1.6vh, 18px) calc(var(--gutter) * -1) -0.155em;
+  font-family: var(--font-ui);
+  font-size: 21vw;
+  font-weight: 700;
+  line-height: 0.86;
+  letter-spacing: -0.035em;
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+
+  /* fades out downwards into the ground, the way the reference does */
+  background-image: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.88) 16%,
+    rgba(255, 255, 255, 0.07) 92%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* the accent half of the wordmark keeps the nav's colour split */
+.footer__wordmark span {
+  background-image: linear-gradient(
+    180deg,
+    rgba(63, 216, 239, 0.85) 16%,
+    rgba(63, 216, 239, 0.05) 92%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* --- reveal --- */
+.footer__cols,
+.footer__legal,
+.footer__wordmark {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 1s var(--ease-out),
+    transform 1s var(--ease-out);
+}
+.footer.is-in .footer__cols,
+.footer.is-in .footer__legal,
+.footer.is-in .footer__wordmark {
+  opacity: 1;
+  transform: none;
+}
+.footer.is-in .footer__legal {
+  transition-delay: 0.14s;
+}
+.footer.is-in .footer__wordmark {
+  transition-delay: 0.24s;
+}
+
+@media (max-width: 720px) {
+  .footer__cols {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 34px;
+  }
+  .footer__wordmark {
+    font-size: 23vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer__cols,
+  .footer__legal,
+  .footer__wordmark {
+    opacity: 1;
+    transform: none;
+  }
+}

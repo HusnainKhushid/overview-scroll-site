@@ -1,0 +1,124 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  padding: 0 var(--gutter);
+  transition: background 0.5s var(--ease-out);
+}
+
+/* stays transparent over the hero, then picks up just enough ground to keep
+   the links legible against the full globe */
+.nav.is-scrolled {
+  background: rgba(1, 4, 12, 0.55);
+  backdrop-filter: blur(14px);
+}
+.nav.is-scrolled .nav__inner {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--nav-h);
+  border-bottom: 1px solid var(--rule);
+}
+
+/* wordmark: one weight, the accent carried only by the second half */
+.nav__logo {
+  font-size: clamp(15px, 1.45vw, 17px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+.nav__logo span {
+  color: var(--cyan);
+}
+
+.nav__links {
+  display: flex;
+  align-items: stretch;
+  gap: 20px;
+  height: 100%;
+}
+
+.nav__link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  font-size: clamp(12px, 1.12vw, 13.5px);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.88);
+  transition: color 0.3s var(--ease-out);
+}
+.nav__link:hover {
+  color: #fff;
+}
+
+/* the active tab's cyan bar sits on the hairline, not above it */
+.nav__link.is-active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 3px;
+  border-radius: 2px 2px 0 0;
+  background: linear-gradient(90deg, #2ec6e4, var(--cyan-pale));
+  box-shadow: 0 0 14px rgba(63, 216, 239, 0.75);
+}
+
+.nav__cta {
+  align-self: center;
+  margin-left: 22px;
+}
+
+.nav__toggle {
+  display: none;
+  padding: 8px;
+  margin-right: -8px;
+  color: #fff;
+}
+
+.nav__sheet {
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 2px 22px;
+  border-bottom: 1px solid var(--rule);
+}
+.nav__sheet a:not(.pill) {
+  padding: 12px 2px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+.nav__sheet .pill {
+  align-self: flex-start;
+  margin-top: 10px;
+}
+
+@media (max-width: 800px) {
+  .nav__links {
+    display: none;
+  }
+  .nav__toggle {
+    display: block;
+  }
+  .nav__sheet {
+    display: none;
+  }
+  .nav__sheet.is-open {
+    display: flex;
+    animation: sheet-in 0.35s var(--ease-out) both;
+  }
+}
+
+@keyframes sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}

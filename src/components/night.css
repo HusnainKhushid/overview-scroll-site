@@ -1,0 +1,155 @@
+.night {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  align-items: center;
+  padding: clamp(90px, 12vh, 150px) var(--gutter) clamp(60px, 12vh, 130px);
+
+  /* hands the frame on the same way the sections above it do */
+  opacity: clamp(0, calc(1 - var(--sp3) * 1.7), 1);
+}
+
+/* the copy sits low-left over the dark hemisphere, the way the limb leaves
+   the frame open at the top right */
+.night__inner {
+  position: relative;
+  width: min(660px, 100%);
+  margin-top: clamp(40px, 11vh, 130px);
+  text-align: left;
+}
+
+.night__shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    rgba(1, 4, 12, 0.45) 0%,
+    rgba(1, 4, 12, 0.34) 34%,
+    rgba(1, 4, 12, 0.06) 62%,
+    rgba(1, 4, 12, 0) 78%
+  );
+}
+
+/* --- the label strip: solid accent key, then the line it introduces --- */
+.night__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 20px 5px 5px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(8px);
+}
+
+.night__chip-key {
+  padding: 6px 13px;
+  border-radius: 999px;
+  background: var(--cyan);
+  color: #04121f;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.night__chip-text {
+  font-size: clamp(11.5px, 1.05vw, 13px);
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+
+.night__title {
+  margin: clamp(24px, 3vw, 38px) 0 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(30px, 4.3vw, 62px);
+  line-height: 1.08;
+  letter-spacing: -0.008em;
+  color: #fff;
+  text-shadow: 0 0 70px rgba(2, 8, 20, 0.9);
+}
+
+.night__copy {
+  margin: clamp(20px, 2.4vw, 30px) 0 0;
+  max-width: 460px;
+  font-size: clamp(13px, 1.15vw, 15px);
+  line-height: 1.78;
+  color: var(--ink-soft);
+}
+
+.night__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: clamp(28px, 3.6vw, 44px);
+}
+
+/* the primary here carries an arrow — it is the one place on the page that
+   sends you forward rather than down */
+.night__go {
+  gap: 12px;
+}
+.night__go svg {
+  transition: transform 0.4s var(--ease-out);
+}
+.night__go:hover svg {
+  transform: translateX(3px);
+}
+
+/* --- reveal --- */
+.night__chip,
+.night__title,
+.night__copy,
+.night__actions {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.9s var(--ease-out),
+    transform 0.9s var(--ease-out);
+}
+.night.is-in .night__chip,
+.night.is-in .night__title,
+.night.is-in .night__copy,
+.night.is-in .night__actions {
+  opacity: 1;
+  transform: none;
+}
+.night.is-in .night__title {
+  transition-delay: 0.12s;
+}
+.night.is-in .night__copy {
+  transition-delay: 0.24s;
+}
+.night.is-in .night__actions {
+  transition-delay: 0.36s;
+}
+
+@media (max-width: 720px) {
+  .night__shade {
+    background: linear-gradient(
+      180deg,
+      rgba(1, 4, 12, 0.05) 0%,
+      rgba(1, 4, 12, 0.36) 42%,
+      rgba(1, 4, 12, 0.46) 100%
+    );
+  }
+  .night__inner {
+    margin-top: auto;
+  }
+  .night__actions .pill {
+    flex: 1 1 auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .night__chip,
+  .night__title,
+  .night__copy,
+  .night__actions {
+    opacity: 1;
+    transform: none;
+  }
+}
